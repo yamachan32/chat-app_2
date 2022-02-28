@@ -38,6 +38,7 @@
           <% end %>
         </select>
         <%# name属性で取得した値をパラメータに含める %>
+        <%# 設定したname属性に見えない入力要素を設けて、そこに自分のuser_idを保存 %>
         <input name="room[user_ids][]" type="hidden" value=<%= current_user.id %>>
       </div>
     </div>
