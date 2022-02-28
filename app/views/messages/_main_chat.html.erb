@@ -12,7 +12,6 @@
   <%# render partialでサブシートを読み込み collectionオプションで取得した全てのデータ分繰り返し出力 %>
     <%= render partial: 'message', collection: @messages %>
   </div>
-
   
 <%= form_with model: [@room, @message], class: 'message_form', local: true do |f| %>
   <div class="form-input">
