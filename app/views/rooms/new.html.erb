@@ -1,28 +1,54 @@
 <div class='chat-room-form'>
   <h1>新規チャットルーム</h1>
+  <%# フォーム %>
   <%=form_with model: @room, local: true do |f|%>
+    <%# チャットルーム %>
     <div class='chat-room-form__field'>
+      <%# ルーム名タイトル %>
       <div class='chat-room-form__field--left'>
         <%= f.label :name, :チャットルーム名, class: 'chat-room-form__label'%>
       </div>
+      <%# ルーム名入力フォーム %>
       <div class='chat-room-form__field--right'>
         <%= f.text_field :name, class: 'chat__room_name chat-room-form__input', placeholder: 'チャットルーム名を入力してください'%>
       </div>
+
     </div>
+
+
     <div class='chat-room-form__field'>
     </div>
+    
+    <%# チャットメンバー %>
     <div class='chat-room-form__field'>
+      <%# チャットメンバータイトル %>
       <div class='chat-room-form__field--left'>
         <label class='chat-room-form__label' for='chat_room_チャットメンバー'>チャットメンバー</label>
       </div>
+      <%# チャットメンバープルダウン %>
       <div class='chat-room-form__field--right'>
+        <%# name属性を指定 ここにオプションのvalueが紐づく %>
+        <select name="room[user_ids][]">
+          <%# 選択肢の一つ目を追加 値なし %>
+          <option value="">チャットするユーザーを選択してください</option>
+          <%# データベースに存在する自分以外のユーザーをリスト化 %>
+          <%# valueはuser_id 表示はuser_name %>
+          <% User.where.not(id: current_user.id).each do |user| %>
+             <option value=<%= user.id %>><%= user.name %></option>
+          <% end %>
+        </select>
+        <%# name属性で取得した値をパラメータに含める %>
+        <input name="room[user_ids][]" type="hidden" value=<%= current_user.id %>>
       </div>
     </div>
+
+    <%# ルーム作成 %>
     <div class='chat-room-form__field'>
       <div class='chat-room-form__field--left'></div>
-      <div class='chat-room-form__field--right'>
-        <%= f.submit class: 'chat-room-form__action-btn'%>
-      </div>
+        <%# ルーム作成ボタン %>
+        <div class='chat-room-form__field--right'>
+          <%= f.submit class: 'chat-room-form__action-btn'%>
+        </div>
     </div>
   <% end %>
 </div>
